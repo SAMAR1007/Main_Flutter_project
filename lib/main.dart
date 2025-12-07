@@ -18,7 +18,7 @@ class TechHiveApp extends StatelessWidget {
         primarySwatch: Colors.purple,
         scaffoldBackgroundColor: Colors.white,
       ),
-      // home: const SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }
