@@ -4,6 +4,7 @@ import '../widgets/custom_button.dart';
 import '../widgets/custom_textfield.dart';
 import 'register_screen.dart';
 import 'home_screen.dart';
+import '../core/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -105,11 +106,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 20),
                 CustomButton(
                   text: 'Login',
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomeScreen()),
-                    );
+                  onPressed: () async {
+                    final email = _emailController.text.trim();
+                    final password = _passwordController.text;
+                    if (email.isEmpty || password.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter email and password')));
+                      return;
+                    }
+                    final success = await AuthService().login(email, password);
+                    if (success) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login successful')));
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const HomeScreen()),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Invalid credentials')));
+                    }
                   },
                 ),
                 const SizedBox(height: 20),
