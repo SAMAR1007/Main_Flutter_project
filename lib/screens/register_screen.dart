@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_textfield.dart';
-import 'home_screen.dart';
+import 'login_screen.dart';
+import '../core/auth_service.dart';
+import '../data/models/user.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -153,11 +155,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(height: 30),
                 CustomButton(
                   text: 'Sign Up',
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomeScreen()),
-                    );
+                  onPressed: () async {
+                    final name = _nameController.text.trim();
+                    final email = _emailController.text.trim();
+                    final phone = _phoneController.text.trim();
+                    final password = _passwordController.text;
+                    final confirm = _confirmPasswordController.text;
+
+                    if (name.isEmpty || email.isEmpty || phone.isEmpty || password.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please fill all fields')));
+                      return;
+                    }
+                    if (password != confirm) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Passwords do not match')));
+                      return;
+                    }
+
+                    final user = User(name: name, email: email.toLowerCase(), phone: phone, password: password);
+                    final success = await AuthService().signup(user);
+                    if (success) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Registration successful')));
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const LoginScreen()),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Email already registered')));
+                    }
                   },
                 ),
                 const SizedBox(height: 20),
