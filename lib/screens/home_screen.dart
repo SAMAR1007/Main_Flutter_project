@@ -1,5 +1,7 @@
 // lib/screens/home_screen.dart
 import 'package:flutter/material.dart';
+import '../core/auth_service.dart';
+import '../data/models/user.dart';
 
 import 'bottom_screen/home_page.dart';
 import 'bottom_screen/categories_screen.dart';
@@ -55,5 +57,16 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() async {
+      final user = await AuthService().currentUser();
+      if (user != null && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Welcome, ${user.name}')));
+      }
+    });
   }
 }
