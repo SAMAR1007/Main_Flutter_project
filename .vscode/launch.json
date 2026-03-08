@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "tech_hive",
+      "request": "launch",
+      "type": "dart",
+      "args": ["--no-dds"]
+    },
+    {
+      "name": "tech_hive (profile mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    }
+  ]
+}
