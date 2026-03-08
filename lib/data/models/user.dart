@@ -5,12 +5,14 @@ class User {
   String email;
   String phone;
   String password;
+  String? profilePicture;
 
   User({
     required this.name,
     required this.email,
     required this.phone,
     required this.password,
+    this.profilePicture,
   });
 }
 
@@ -24,7 +26,14 @@ class UserAdapter extends TypeAdapter<User> {
     final email = reader.readString();
     final phone = reader.readString();
     final password = reader.readString();
-    return User(name: name, email: email, phone: phone, password: password);
+    final profilePicture = reader.readString();
+    return User(
+      name: name,
+      email: email,
+      phone: phone,
+      password: password,
+      profilePicture: profilePicture.isEmpty ? null : profilePicture,
+    );
   }
 
   @override
@@ -33,5 +42,6 @@ class UserAdapter extends TypeAdapter<User> {
     writer.writeString(obj.email);
     writer.writeString(obj.phone);
     writer.writeString(obj.password);
+    writer.writeString(obj.profilePicture ?? '');
   }
 }
