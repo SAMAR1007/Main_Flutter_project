@@ -52,6 +52,39 @@ class ReviewModel {
     );
   }
 
+  ReviewModel copyWith({
+    String? id,
+    String? productId,
+    String? userId,
+    String? userName,
+    int? rating,
+    String? comment,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return ReviewModel(
+      id: id ?? this.id,
+      productId: productId ?? this.productId,
+      userId: userId ?? this.userId,
+      userName: userName ?? this.userName,
+      rating: rating ?? this.rating,
+      comment: comment ?? this.comment,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() => 'ReviewModel(id: $id, rating: $rating, user: $userName)';
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ReviewModel && runtimeType == other.runtimeType && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
   Map<String, dynamic> toJson() {
     return {
       'rating': rating,
