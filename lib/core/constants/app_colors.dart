@@ -23,6 +23,23 @@ class AppColors {
   static const Color card = Colors.white;
   static const Color border = Color(0xFFE0E0E0);
 
+  // Status colors
+  static const Color success = Color(0xFF4CAF50);
+  static const Color warning = Color(0xFFFFA726);
+  static const Color error = Color(0xFFEF5350);
+  static const Color info = Color(0xFF42A5F5);
+
+  // Rating
+  static const Color starFilled = Color(0xFFFFC107);
+  static const Color starEmpty = Color(0xFFE0E0E0);
+
+  // Order status colors
+  static const Color statusPending = Color(0xFFFFA726);
+  static const Color statusConfirmed = Color(0xFF42A5F5);
+  static const Color statusShipped = Color(0xFF7E57C2);
+  static const Color statusDelivered = Color(0xFF4CAF50);
+  static const Color statusCancelled = Color(0xFFEF5350);
+
   // Convenience
   static LinearGradient get primaryGradient => const LinearGradient(
     colors: gradient,
