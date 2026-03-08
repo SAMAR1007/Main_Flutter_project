@@ -43,6 +43,38 @@ class OrderModel {
       updatedAt: json['updatedAt'] != null ? DateTime.tryParse(json['updatedAt']) : null,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'items': items.map((item) => item.toJson()).toList(),
+      'totalAmount': totalAmount,
+      'shippingAddress': shippingAddress.toJson(),
+      'paymentMethod': paymentMethod,
+      'paymentStatus': paymentStatus,
+      if (transactionId != null) 'transactionId': transactionId,
+      'status': status,
+    };
+  }
+
+  String get statusLabel {
+    switch (status) {
+      case 'pending':
+        return 'Pending';
+      case 'confirmed':
+        return 'Confirmed';
+      case 'shipped':
+        return 'Shipped';
+      case 'delivered':
+        return 'Delivered';
+      case 'cancelled':
+        return 'Cancelled';
+      default:
+        return status;
+    }
+  }
+
+  @override
+  String toString() => 'OrderModel(id: $id, status: $status, total: $totalAmount)';
 }
 
 class OrderItem {
@@ -86,6 +118,15 @@ class OrderItem {
       priceAtPurchase: (json['priceAtPurchase'] ?? 0).toDouble(),
       subtotal: (json['subtotal'] ?? 0).toDouble(),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'product': productId,
+      'quantity': quantity,
+      'priceAtPurchase': priceAtPurchase,
+      'subtotal': subtotal,
+    };
   }
 }
 
