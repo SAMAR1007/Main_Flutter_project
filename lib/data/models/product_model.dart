@@ -77,6 +77,51 @@ class ProductModel {
     return price;
   }
 
+  ProductModel copyWith({
+    String? id,
+    String? name,
+    double? price,
+    String? category,
+    String? brand,
+    String? description,
+    String? image,
+    double? rating,
+    int? reviews,
+    bool? isDeal,
+    String? dealType,
+    double? discountPercent,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return ProductModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      category: category ?? this.category,
+      brand: brand ?? this.brand,
+      description: description ?? this.description,
+      image: image ?? this.image,
+      rating: rating ?? this.rating,
+      reviews: reviews ?? this.reviews,
+      isDeal: isDeal ?? this.isDeal,
+      dealType: dealType ?? this.dealType,
+      discountPercent: discountPercent ?? this.discountPercent,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() => 'ProductModel(id: $id, name: $name, price: $price)';
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ProductModel && runtimeType == other.runtimeType && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
   /// Category icon mapping
   static const Map<String, int> categoryIcons = {
     'Smartphones': 0xe1e3, // Icons.phone_android
